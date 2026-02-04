@@ -41,15 +41,15 @@
           "purpose": "Create main application window"
         },
         "setupAllIPC": {
-          "line": 75,
+          "line": 84,
           "purpose": "Setup all IPC handlers"
         },
         "init": {
-          "line": 102,
+          "line": 111,
           "purpose": "Initialize application"
         },
         "initModulesWithWindow": {
-          "line": 113,
+          "line": 122,
           "params": [
             "window"
           ],
@@ -182,28 +182,29 @@
           "purpose": "Get menu template"
         },
         "sendCommand": {
-          "line": 114,
+          "line": 124,
           "params": [
             "command"
           ],
           "purpose": "Send command to terminal"
         },
         "toggleHistoryPanel": {
-          "line": 123,
+          "line": 133,
           "purpose": "Toggle history panel"
         },
         "openHistoryFile": {
-          "line": 132,
+          "line": 142,
           "purpose": "Open history file in default editor"
         },
         "createMenu": {
-          "line": 146,
+          "line": 156,
           "purpose": "Create and set application menu"
         }
       },
       "ipc": {
         "listens": [],
         "emits": [
+          "open",
           "RUN_COMMAND",
           "TOGGLE_HISTORY_PANEL"
         ]
@@ -716,19 +717,21 @@
         "state",
         "projectListUI",
         "editor",
-        "sidebarResize"
+        "sidebarResize",
+        "themeManager",
+        "settingsPanel"
       ],
       "functions": {
         "init": {
-          "line": 20,
+          "line": 22,
           "purpose": "Initialize all modules"
         },
         "setupButtonHandlers": {
-          "line": 126,
+          "line": 134,
           "purpose": "Setup button click handlers"
         },
         "setupKeyboardShortcuts": {
-          "line": 179,
+          "line": 187,
           "purpose": "Setup keyboard shortcuts"
         }
       }
@@ -1520,7 +1523,8 @@
         "electron",
         "xterm",
         "xterm-addon-fit",
-        "shared/ipcChannels"
+        "shared/ipcChannels",
+        "themeManager"
       ],
       "functions": {},
       "ipc": {
@@ -3041,6 +3045,131 @@
         "emits": [
           "TOGGLE_GIT_BRANCHES_PANEL"
         ]
+      }
+    },
+    "renderer/settingsPanel": {
+      "file": "src/renderer/settingsPanel.js",
+      "description": "S",
+      "exports": [
+        "init",
+        "show",
+        "hide",
+        "toggle"
+      ],
+      "depends": [
+        "electron",
+        "themeManager"
+      ],
+      "functions": {
+        "init": {
+          "line": 12
+        },
+        "_createOverlay": {
+          "line": 16
+        },
+        "_terminalCard": {
+          "line": 103,
+          "params": [
+            "t"
+          ]
+        },
+        "_terminalPreviewDots": {
+          "line": 119,
+          "params": [
+            "id"
+          ]
+        },
+        "_isDarkColor": {
+          "line": 130,
+          "params": [
+            "hex"
+          ]
+        },
+        "_updateSelection": {
+          "line": 137
+        },
+        "show": {
+          "line": 150
+        },
+        "hide": {
+          "line": 157
+        },
+        "toggle": {
+          "line": 162
+        },
+        "_injectStyles": {
+          "line": 166
+        }
+      },
+      "ipc": {
+        "listens": [
+          "open"
+        ],
+        "emits": []
+      }
+    },
+    "renderer/themeManager": {
+      "file": "src/renderer/themeManager.js",
+      "description": "T",
+      "exports": [
+        "init",
+        "applyTheme",
+        "applyTerminalTheme",
+        "getTheme",
+        "getTerminalTheme",
+        "getXtermTheme",
+        "onChange",
+        "onTerminalChange",
+        "APP_THEMES",
+        "TERMINAL_THEMES",
+        "XTERM_DEFS"
+      ],
+      "depends": [],
+      "functions": {
+        "init": {
+          "line": 180,
+          "purpose": "Initialize theme manager - apply saved themes"
+        },
+        "applyTheme": {
+          "line": 195,
+          "params": [
+            "theme"
+          ],
+          "purpose": "Apply an app theme"
+        },
+        "applyTerminalTheme": {
+          "line": 213,
+          "params": [
+            "themeId"
+          ],
+          "purpose": "Apply a terminal theme"
+        },
+        "getTheme": {
+          "line": 222,
+          "purpose": "Get current app theme id"
+        },
+        "getTerminalTheme": {
+          "line": 229,
+          "purpose": "Get current terminal theme id"
+        },
+        "getXtermTheme": {
+          "line": 236,
+          "purpose": "Get the resolved xterm theme object"
+        },
+        "onChange": {
+          "line": 247,
+          "params": [
+            "cb"
+          ],
+          "purpose": "Register callback for app theme changes"
+        },
+        "onTerminalChange": {
+          "line": 254,
+          "params": [
+            "cb"
+          ],
+          "purpose": "Register callback for terminal theme changes (includes auto changes)"
+        }
       }
     }
   },

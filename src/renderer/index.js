@@ -13,11 +13,16 @@ const state = require('./state');
 const projectListUI = require('./projectListUI');
 const editor = require('./editor');
 const sidebarResize = require('./sidebarResize');
+const themeManager = require('./themeManager');
+const settingsPanel = require('./settingsPanel');
 
 /**
  * Initialize all modules
  */
 function init() {
+  // Initialize theme manager (apply saved theme before UI renders)
+  themeManager.init();
+
   // Initialize terminal
   const multiTerminalUI = terminal.initTerminal('terminal');
 
@@ -67,6 +72,9 @@ function init() {
 
   // Initialize GitHub panel
   githubPanel.init();
+
+  // Initialize settings panel
+  settingsPanel.init();
 
   // Initialize sidebar resize
   sidebarResize.init(() => {
@@ -228,6 +236,15 @@ function setupKeyboardShortcuts() {
     if (modKey && !e.shiftKey && key === 't') {
       e.preventDefault();
       tasksPanel.toggle()
+    }
+    // Ctrl/Cmd+, - Open settings
+    if (modKey && key === ',') {
+      e.preventDefault();
+      settingsPanel.show();
+    }
+    // Escape - Close settings
+    if (key === 'escape') {
+      settingsPanel.hide();
     }
   });
 }

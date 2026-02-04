@@ -102,7 +102,10 @@ const IPC = {
   LOAD_GIT_WORKTREES: 'load-git-worktrees',
   ADD_GIT_WORKTREE: 'add-git-worktree',
   REMOVE_GIT_WORKTREE: 'remove-git-worktree',
-  TOGGLE_GIT_BRANCHES_PANEL: 'toggle-git-branches-panel'
+  TOGGLE_GIT_BRANCHES_PANEL: 'toggle-git-branches-panel',
+
+  // Settings
+  OPEN_SETTINGS: 'open-settings'
 };
 
 module.exports = { IPC };

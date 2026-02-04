@@ -1,8 +1,8 @@
 {
-  "name": "frame",
-  "productName": "Frame",
+  "name": "frames",
+  "productName": "Frames",
   "version": "1.0.0",
-  "description": "Frame - Project Management IDE for Claude Code",
+  "description": "Frames - Project Management IDE for Claude Code",
   "main": "src/main/index.js",
   "scripts": {
     "postinstall": "electron-rebuild",
@@ -39,10 +39,11 @@
     "xterm-addon-fit": "^0.8.0"
   },
   "build": {
-    "appId": "com.frame.ide",
-    "productName": "Frame",
+    "appId": "com.frames.ide",
+    "productName": "Frames",
     "mac": {
       "category": "public.app-category.developer-tools",
+      "icon": "build/icon.icns",
       "target": ["dmg"],
       "hardenedRuntime": true,
       "gatekeeperAssess": false,

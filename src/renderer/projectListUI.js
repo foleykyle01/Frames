@@ -98,7 +98,7 @@ function createProjectItem(project, index) {
   if (project.isFrameProject) {
     const badge = document.createElement('span');
     badge.className = 'frame-badge';
-    badge.textContent = 'Frame';
+    badge.textContent = 'Frames';
     item.appendChild(badge);
   }
 

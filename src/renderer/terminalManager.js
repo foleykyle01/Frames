@@ -7,29 +7,7 @@ const { ipcRenderer, clipboard } = require('electron');
 const { Terminal } = require('xterm');
 const { FitAddon } = require('xterm-addon-fit');
 const { IPC } = require('../shared/ipcChannels');
-
-// Terminal theme (VS Code dark)
-const terminalTheme = {
-  background: '#1e1e1e',
-  foreground: '#d4d4d4',
-  cursor: '#ffffff',
-  black: '#000000',
-  red: '#cd3131',
-  green: '#0dbc79',
-  yellow: '#e5e510',
-  blue: '#2472c8',
-  magenta: '#bc3fbc',
-  cyan: '#11a8cd',
-  white: '#e5e5e5',
-  brightBlack: '#666666',
-  brightRed: '#f14c4c',
-  brightGreen: '#23d18b',
-  brightYellow: '#f5f543',
-  brightBlue: '#3b8eea',
-  brightMagenta: '#d670d6',
-  brightCyan: '#29b8db',
-  brightWhite: '#e5e5e5'
-};
+const themeManager = require('./themeManager');
 
 // Session storage key
 const SESSION_STORAGE_KEY = 'frame-terminal-sessions';
@@ -46,6 +24,13 @@ class TerminalManager {
     this.onStateChange = null;
     this.currentProjectPath = null; // Current active project (null = global)
     this._setupIPC();
+
+    // Update all terminal themes when terminal theme changes (app or explicit)
+    themeManager.onTerminalChange((xtermTheme) => {
+      for (const [, instance] of this.terminals) {
+        instance.terminal.options.theme = xtermTheme;
+      }
+    });
   }
 
   /**
@@ -247,7 +232,7 @@ class TerminalManager {
       cursorBlink: true,
       fontSize: 14,
       fontFamily: 'Consolas, "Courier New", monospace',
-      theme: terminalTheme,
+      theme: themeManager.getXtermTheme(),
       allowTransparency: false,
       scrollback: 10000
     });

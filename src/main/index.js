@@ -3,7 +3,7 @@
  * Initializes Electron app, creates window, loads modules
  */
 
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, nativeImage } = require('electron');
 const path = require('path');
 const { IPC } = require('../shared/ipcChannels');
 
@@ -30,6 +30,9 @@ let mainWindow = null;
  * Create main application window
  */
 function createWindow() {
+  const iconPath = path.join(__dirname, '..', '..', 'build', 'icon.png');
+  const appIcon = nativeImage.createFromPath(iconPath);
+
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 700,
@@ -37,9 +40,15 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: false
     },
-    backgroundColor: '#1e1e1e',
-    title: 'Frame'
+    icon: appIcon,
+    backgroundColor: '#0f0f10',
+    title: 'Frames'
   });
+
+  // Set dock icon on macOS
+  if (process.platform === 'darwin' && app.dock) {
+    app.dock.setIcon(appIcon);
+  }
 
   mainWindow.loadFile('index.html');
 
@@ -125,7 +134,7 @@ function initModulesWithWindow(window) {
 // App lifecycle
 app.whenReady().then(() => {
   // macOS'ta menü bar'da "Frame" görünsün
-  app.setName('Frame');
+  app.setName('Frames');
 
   init();
   createWindow();

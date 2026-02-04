@@ -146,6 +146,12 @@
   cursor: not-allowed;
 }
 
+.btn-theme-toggle {
+  font-size: 16px !important;
+  min-width: 28px;
+  text-align: center;
+}
+
 .terminal-tab-actions select {
   background: var(--bg-tertiary);
   border: 1px solid var(--border-subtle);
